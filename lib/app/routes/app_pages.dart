@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:pocket_codex/app/screens/home/home.dart';
+
+import '../modules/home/home.dart';
 
 part './app_routes.dart';
 

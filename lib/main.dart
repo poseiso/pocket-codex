@@ -10,8 +10,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // Since we're using get
-  // GetMaterialApp is required
+  // Since we're using contextful features of get like routing
+  // GetMaterialApp is required for it to work
   // Do not change it to regular MaterialApp
   @override
   Widget build(BuildContext context) {
