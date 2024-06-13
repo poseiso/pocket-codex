@@ -10,6 +10,11 @@ class PokemonItem extends StatelessWidget {
   final int id;
   final String name;
   final List<Type> types;
+  // The PokemonDetail model is quite large,
+  // so it's better to pass a function instead.
+  // Although passing the object wouldn't cause memory overhead
+  // since it's passed by reference,
+  // using a function makes the intent clearer.
   final Function() onTap;
 
   const PokemonItem({
@@ -38,7 +43,7 @@ class PokemonItem extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {},
+          onTap: onTap,
           child: Stack(
             children: [
               Positioned(
@@ -81,15 +86,18 @@ class PokemonItem extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      child: CachedNetworkImage(
-                        imageUrl: '${AppConfig.baseUrlImg}$id.png',
-                        height: 100.0,
-                        width: 100.0,
-                        errorWidget: (context, url, error) => Container(
-                          color: Colors.transparent,
-                        ),
-                        placeholder: (context, url) => Container(
-                          color: Colors.transparent,
+                      child: Hero(
+                        tag: 'image_$id',
+                        child: CachedNetworkImage(
+                          imageUrl: '${AppConfig.baseUrlImg}$id.png',
+                          height: 100.0,
+                          width: 100.0,
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.transparent,
+                          ),
+                          placeholder: (context, url) => Container(
+                            color: Colors.transparent,
+                          ),
                         ),
                       ),
                     ),
@@ -113,7 +121,7 @@ class PokemonItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          e.type.name,
+          e.type.name.capitalizeFirst!,
           style: const TextStyle(color: Colors.white),
         ),
       );

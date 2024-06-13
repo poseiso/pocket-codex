@@ -10,9 +10,4 @@ class PokemonProvider extends GetConnect {
     final url = '$_baseUrl/$_endpoint?limit=$limit&offset=$offset';
     return get(url);
   }
-
-  Future<Response> fetchPokemonDetails(int id) {
-    final url = '$_baseUrl/$_endpoint/$id';
-    return get(url);
-  }
 }

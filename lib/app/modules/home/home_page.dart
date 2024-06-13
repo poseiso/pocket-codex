@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../routes/app_pages.dart';
 import 'home_controller.dart';
 import 'widgets/pokemon_item.dart';
 
@@ -62,7 +63,10 @@ class HomePage extends GetView<HomeController> {
                         id: item.id,
                         name: item.name,
                         types: item.types,
-                        onTap: () => {},
+                        onTap: () => Get.toNamed(
+                          AppRoutes.pokemonDetail,
+                          arguments: {'detail': item},
+                        ),
                       );
                     },
                     //         )

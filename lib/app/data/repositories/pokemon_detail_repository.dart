@@ -14,4 +14,22 @@ class PokemonDetailRepository {
       return null;
     }
   }
+
+  Future<Evolution?> fetchEvolution(int id) async {
+    final response = await provider.fetchEvolution(id);
+    if (response.isOk) {
+      return Evolution.fromJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  Future<PokemonSpecies?> fetchSpecies(int id) async {
+    final response = await provider.fetchSpecies(id);
+    if (response.isOk) {
+      return PokemonSpecies.fromJson(response.body);
+    } else {
+      return null;
+    }
+  }
 }
