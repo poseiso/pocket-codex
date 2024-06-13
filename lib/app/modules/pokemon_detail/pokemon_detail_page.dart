@@ -38,7 +38,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
             Flexible(
               child: Container(
                 color: Utils.colorByType(
-                  controller.pokemon!.types.first.type.name,
+                  controller.pokemonItem!.types.first!,
                 ),
                 child: Stack(
                   children: [
@@ -49,7 +49,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                         "assets/images/memphis_dot.png",
                         width: 100,
                         height: 100,
-                        color: Colors.white38,
+                        color: Colors.white24,
                       ),
                     ),
                     Positioned(
@@ -61,14 +61,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                           height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: const FractionalOffset(0, 0),
-                              end: const FractionalOffset(1, 1),
-                              colors: [
-                                Colors.white24,
-                                Colors.white.withOpacity(0),
-                              ],
-                            ),
+                            color: Colors.white24,
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
@@ -78,7 +71,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                       bottom: -10,
                       right: -50,
                       child: Hero(
-                        tag: 'ball_${controller.pokemon!.id}',
+                        tag: 'ball_${controller.pokemonItem!.id}',
                         child: const WidgetLogoBackground(),
                       ),
                     ),
@@ -99,7 +92,8 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      controller.pokemon!.name.capitalizeFirst!,
+                                      controller
+                                          .pokemonItem!.name.capitalizeFirst!,
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 30,
@@ -107,7 +101,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                                       ),
                                     ),
                                     Text(
-                                      "#${controller.pokemon!.id}",
+                                      "#${controller.pokemonItem!.id}",
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 24,
@@ -117,7 +111,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
-                                _typeChips(controller.pokemon!.types),
+                                _typeChips(controller.pokemonItem!.types),
                               ],
                             ),
                           ),
@@ -134,12 +128,12 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                       ],
                     ),
                     Hero(
-                      tag: 'image_${controller.pokemon!.id}',
+                      tag: 'image_${controller.pokemonItem!.id}',
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: CachedNetworkImage(
                           imageUrl:
-                              '${AppConfig.baseUrlImg}${controller.pokemon!.id}.png',
+                              '${AppConfig.baseUrlImg}${controller.pokemonItem!.id}.png',
                           height: 250.0,
                           width: 250.0,
                           errorWidget: (context, url, error) => Container(
@@ -164,7 +158,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                       labelColor: Colors.black,
                       unselectedLabelColor: Colors.black54,
                       indicatorColor: Utils.colorByType(
-                        controller.pokemon!.types.first.type.name,
+                        controller.pokemonItem!.types.first!,
                       ),
                       tabs: const [
                         Tab(text: 'About'),
@@ -298,13 +292,13 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          e.move.name.capitalizeFirst!,
+          e.name.capitalizeFirst!,
         ),
       );
     }).toList();
   }
 
-  Widget _typeChips(List<Type> types) {
+  Widget _typeChips(List<String?> types) {
     return Flex(
       direction: Axis.horizontal,
       children: types.map((e) {
@@ -316,7 +310,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            e.type.name.capitalizeFirst!,
+            e ?? "",
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,

@@ -14,7 +14,7 @@ class _WidgetStatChart extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Text(
-              e.stat.name.replaceAll('-', ' ').capitalizeFirst ?? '',
+              e.name.replaceAll('-', ' ').capitalizeFirst ?? '',
               style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 16,

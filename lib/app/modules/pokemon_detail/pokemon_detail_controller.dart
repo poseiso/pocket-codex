@@ -11,15 +11,14 @@ class PokemonDetailController extends GetxController {
 
   final _isLoading = true.obs;
   final _pokemon = Rxn<PokemonDetail>();
+  final _pokemonItem = Rxn<PokemonItem>();
   final _evolution = Rxn<Evolution>();
   final _species = Rxn<PokemonSpecies>();
 
   bool get isLoading => _isLoading.value;
-
   PokemonDetail? get pokemon => _pokemon.value;
-
+  PokemonItem? get pokemonItem => _pokemonItem.value;
   Evolution? get evolution => _evolution.value;
-
   PokemonSpecies? get species => _species.value;
 
   @override
@@ -30,7 +29,10 @@ class PokemonDetailController extends GetxController {
 
   Future<void> fetchPokemonDetail() async {
     try {
-      _pokemon.value = Get.arguments['detail'];
+      _pokemonItem.value = Get.arguments['detail'];
+      final detailResponse =
+          await _repository.fetchPokemonDetail(_pokemonItem.value!.name);
+      _pokemon.value = detailResponse;
 
       final speciesResponse = await _repository.fetchSpecies(pokemon!.id);
       if (speciesResponse != null) {
@@ -48,13 +50,13 @@ class PokemonDetailController extends GetxController {
   }
 
   String get abilities {
-    return pokemon!.abilities.map((item) => item.ability.name).join(', ');
+    return pokemon!.abilities.map((item) => item.name).join(', ');
   }
 
   String listPokeMove() {
     return pokemon!.moves
         .map((element) =>
-            element.move.name[0].toUpperCase() + element.move.name.substring(1))
+            element.name[0].toUpperCase() + element.name.substring(1))
         .join(', ');
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pocket_codex/app/common/widget_error.dart';
+import 'package:pocket_codex/app/common/widget_loading.dart';
 
 import '../../routes/app_pages.dart';
 import 'home_controller.dart';
@@ -16,8 +18,8 @@ class HomePage extends GetView<HomeController> {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            top: statusBarHeight - 240 * 0.4,
-            left: Get.width - (240 * 0.6),
+            top: -90,
+            right: -100,
             child: Image.asset(
               'assets/images/pokeball.png',
               opacity: const AlwaysStoppedAnimation(0.1),
@@ -49,6 +51,7 @@ class HomePage extends GetView<HomeController> {
                     physics: const BouncingScrollPhysics(),
                     addAutomaticKeepAlives: false,
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    controller: controller.scrollController,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -71,9 +74,12 @@ class HomePage extends GetView<HomeController> {
                     },
                     //         )
                   ),
-                  onLoading: const Text("Loading"),
+                  onLoading: const LoadingLogo(),
                   onError: (error) {
-                    return Text("error $error");
+                    return WidgetError(
+                      onReload: controller.fetchAllPokemon,
+                      error: error ?? "",
+                    );
                   },
                 ),
               ),

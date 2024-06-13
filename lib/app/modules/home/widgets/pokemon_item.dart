@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 import 'package:pocket_codex/app/utils/app_config.dart';
 import 'package:pocket_codex/app/utils/utils.dart';
 
-import '../../../data/models/pokemon_detail.dart';
-
 class PokemonItem extends StatelessWidget {
-  final int id;
+  final String id;
   final String name;
-  final List<Type> types;
+  final List<String?> types;
   // The PokemonDetail model is quite large,
   // so it's better to pass a function instead.
   // Although passing the object wouldn't cause memory overhead
@@ -29,7 +27,7 @@ class PokemonItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Utils.colorByType(types.first.type.name),
+        color: Utils.colorByType(types.isEmpty ? "" : types.first!),
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(
@@ -68,19 +66,21 @@ class PokemonItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10),
-                          Text(
-                            name.capitalizeFirst!,
-                            softWrap: false,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+                          FittedBox(
+                            child: Text(
+                              name.replaceAll('-', ' ').capitalizeFirst ?? '',
+                              softWrap: false,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 4),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _generateType(),
+                            children: types.isNotEmpty ? _generateType() : [],
                           ),
                         ],
                       ),
@@ -92,8 +92,10 @@ class PokemonItem extends StatelessWidget {
                           imageUrl: '${AppConfig.baseUrlImg}$id.png',
                           height: 100.0,
                           width: 100.0,
-                          errorWidget: (context, url, error) => Container(
-                            color: Colors.transparent,
+                          // Some sprites are still not available from the api provider
+                          errorWidget: (context, url, error) => const Text(
+                            "Sprite unavailable",
+                            textAlign: TextAlign.center,
                           ),
                           placeholder: (context, url) => Container(
                             color: Colors.transparent,
@@ -121,8 +123,8 @@ class PokemonItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          e.type.name.capitalizeFirst!,
-          style: const TextStyle(color: Colors.white),
+          e != "" ? e!.capitalizeFirst! : "Loading",
+          style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
       );
     }).toList();
