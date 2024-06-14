@@ -37,7 +37,6 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
         child: Column(
           children: [
             Flexible(
-              flex: 2,
               child: Container(
                 color: Utils.colorByType(
                   controller.pokemonItem!.types.first!,
