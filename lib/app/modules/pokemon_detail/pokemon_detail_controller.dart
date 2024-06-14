@@ -44,7 +44,6 @@ class PokemonDetailController extends GetxController {
 
       final speciesResponse = await _repository.fetchSpecies(pokemon!.id);
       if (speciesResponse == null) {
-        _isError.value = true;
         throw Exception("No result from fetch pokemon");
       }
       _species.value = speciesResponse;
