@@ -64,7 +64,7 @@ class _WidgetEvolutionItem extends StatelessWidget {
             ),
           ],
         ),
-        Text(name.capitalizeFirst!),
+        Text(name.capitalize!),
       ],
     );
   }

@@ -9,9 +9,17 @@ class HomeBinding implements Bindings {
   void dependencies() {
     Get.lazyPut(
       () => HomeController(
-        repository: PokemonRepository(provider: PokemonProvider()),
+        repository: PokemonRepository(
+          provider: PokemonProvider(),
+        ),
         pokemonDetailRepository: PokemonDetailRepository(
           provider: PokemonDetailProvider(),
+        ),
+        pokemonTypeRepository: PokemonTypeRepository(
+          provider: PokemonTypeProvider(),
+        ),
+        pokemonTypeDetailRepository: PokemonTypeDetailRepository(
+          provider: PokemonTypeDetailProvider(),
         ),
       ),
     );

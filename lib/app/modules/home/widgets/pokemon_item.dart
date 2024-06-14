@@ -68,7 +68,7 @@ class PokemonItem extends StatelessWidget {
                           const SizedBox(height: 10),
                           FittedBox(
                             child: Text(
-                              name.replaceAll('-', ' ').capitalizeFirst ?? '',
+                              name.replaceAll('-', ' ').capitalize ?? '',
                               softWrap: false,
                               style: const TextStyle(
                                 color: Colors.white,
@@ -93,9 +93,10 @@ class PokemonItem extends StatelessWidget {
                           height: 100.0,
                           width: 100.0,
                           // Some sprites are still not available from the api provider
-                          errorWidget: (context, url, error) => const Text(
-                            "Sprite unavailable",
-                            textAlign: TextAlign.center,
+                          errorWidget: (context, url, error) => Image.asset(
+                            "assets/images/pokemon_notfound.png",
+                            width: 100.0,
+                            height: 100.0,
                           ),
                           placeholder: (context, url) => Container(
                             color: Colors.transparent,
@@ -123,7 +124,7 @@ class PokemonItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          e != "" ? e!.capitalizeFirst! : "Loading",
+          e != "" ? e!.capitalize! : "Loading",
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
       );

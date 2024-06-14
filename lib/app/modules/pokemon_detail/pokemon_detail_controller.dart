@@ -44,8 +44,8 @@ class PokemonDetailController extends GetxController {
       }
 
       _isLoading.value = false;
-    } catch (error) {
-      Logger().d(error);
+    } catch (error, trace) {
+      Logger().f(error, stackTrace: trace);
     }
   }
 
@@ -53,7 +53,7 @@ class PokemonDetailController extends GetxController {
     return pokemon!.abilities.map((item) => item.name).join(', ');
   }
 
-  String listPokeMove() {
+  String get listPokeMove {
     return pokemon!.moves
         .map((element) =>
             element.name[0].toUpperCase() + element.name.substring(1))

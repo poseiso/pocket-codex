@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Pokemon {
   final int count;
-  final List<PokemonItem> results;
+  List<PokemonItem> results;
 
   Pokemon({
     required this.count,

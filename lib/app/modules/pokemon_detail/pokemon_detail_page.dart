@@ -91,15 +91,21 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      controller
-                                          .pokemonItem!.name.capitalizeFirst!,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600,
+                                    Flexible(
+                                      child: FittedBox(
+                                        child: Text(
+                                          controller.pokemonItem!.name
+                                              .replaceAll('-', ' ')
+                                              .capitalize!,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
                                       ),
                                     ),
+                                    const SizedBox(width: 16.0),
                                     Text(
                                       "#${controller.pokemonItem!.id}",
                                       style: const TextStyle(
@@ -136,8 +142,10 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                               '${AppConfig.baseUrlImg}${controller.pokemonItem!.id}.png',
                           height: 250.0,
                           width: 250.0,
-                          errorWidget: (context, url, error) => Container(
-                            color: Colors.transparent,
+                          errorWidget: (context, url, error) => Image.asset(
+                            "assets/images/pokemon_notfound.png",
+                            width: 250.0,
+                            height: 250.0,
                           ),
                           placeholder: (context, url) => Container(
                             color: Colors.transparent,
@@ -204,7 +212,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
               children: [
                 _WidgetStatItem(
                   label: 'Species',
-                  value: controller.pokemon!.species.name.capitalizeFirst!,
+                  value: controller.pokemon!.species.name.capitalize!,
                 ),
                 // Height in decimeter
                 _WidgetStatItem(
@@ -218,7 +226,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                 ),
                 _WidgetStatItem(
                   label: 'Abilities',
-                  value: controller.abilities,
+                  value: controller.abilities.replaceAll("-", " ").capitalize!,
                 ),
               ],
             ),
@@ -233,17 +241,36 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
   }
 
   Widget _evolution() {
-    final second = controller.evolution!.chain.evolvesTo;
-    final secondID = second!.first.species.url.split('/');
+    if (controller.evolution?.chain.evolvesTo?.firstOrNull == null) {
+      return Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            children: [
+              Image.asset("assets/images/pokeball.png",
+                  width: 100, height: 100),
+              const Positioned(
+                right: 0,
+                child: Icon(Icons.warning_rounded, color: Colors.orange,),
+              ),
+            ],
+          ),
+          const Text("No evolution"),
+        ],
+      ));
+    }
+    final second = controller.evolution?.chain.evolvesTo ?? [];
+    final secondID = second.first.species.url.split('/');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           _WidgetEvolutionItem(
-            name: controller.evolution!.chain.species.name,
+            name: controller.evolution?.chain.species.name ?? "",
             id: int.parse(
-                controller.evolution!.chain.species.url.split('/')[6]),
+                controller.evolution?.chain.species.url.split('/')[6] ?? "0"),
             secondID: int.parse(secondID[secondID.length - 2]),
             secondName: second.first.species.name,
             level: second.first.evolutionDetails.first.minLevel,
@@ -292,7 +319,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          e.name.capitalizeFirst!,
+          e.name.capitalize!,
         ),
       );
     }).toList();
@@ -310,7 +337,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            e ?? "",
+            e?.capitalize ?? "Normal",
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,

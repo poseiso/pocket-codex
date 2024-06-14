@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-// Isolated StatefulWidget
-// won't impact performance that much 
+// An isolated StatefulWidget shouldn't significantly impact performance.
 class LoadingLogo extends StatefulWidget {
   const LoadingLogo({super.key});
 

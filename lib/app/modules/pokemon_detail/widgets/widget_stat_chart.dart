@@ -14,7 +14,7 @@ class _WidgetStatChart extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Text(
-              e.name.replaceAll('-', ' ').capitalizeFirst ?? '',
+              e.name.replaceAll('-', ' ').capitalize ?? '',
               style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 16,
@@ -99,7 +99,7 @@ class _WidgetStatBarItemState extends State<_WidgetStatBarItem>
           animation: _animation,
           builder: (context, _) {
             return FractionallySizedBox(
-              widthFactor: _animation.value / 120,
+              widthFactor: _animation.value / 200,
               child: Container(
                 height: 6,
                 decoration: BoxDecoration(

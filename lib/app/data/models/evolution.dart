@@ -61,7 +61,7 @@ class Chain {
 }
 
 class EvolutionDetail {
-  final int minLevel;
+  final String minLevel;
 
   EvolutionDetail({
     required this.minLevel,
@@ -73,7 +73,7 @@ class EvolutionDetail {
 
   factory EvolutionDetail.fromJson(Map<String, dynamic> json) =>
       EvolutionDetail(
-        minLevel: json["min_level"] ?? '-',
+        minLevel: json["min_level"]!=null ? json["min_level"].toString() : "-",
       );
 
   Map<String, dynamic> toJson() => {

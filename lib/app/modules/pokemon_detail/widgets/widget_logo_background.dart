@@ -1,8 +1,6 @@
 part of '../pokemon_detail_page.dart';
 
 // An isolated StatefulWidget shouldn't significantly impact performance.
-// It could be converted into a StatelessWidget with a transition style animation,
-// but making it loop would be too much trouble for just this one widget.
 class WidgetLogoBackground extends StatefulWidget {
   const WidgetLogoBackground({super.key});
 

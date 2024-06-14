@@ -12,7 +12,6 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = Get.mediaQuery.padding.top;
     return Scaffold(
       body: Stack(
         clipBehavior: Clip.none,
@@ -30,7 +29,7 @@ class HomePage extends GetView<HomeController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: statusBarHeight + 16.0),
+              const SizedBox(height: 42.0),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
@@ -45,6 +44,59 @@ class HomePage extends GetView<HomeController> {
                 ),
               ),
               const SizedBox(height: 24.0),
+              Row(
+                children: [
+                  const SizedBox(width: 12.0),
+                  Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.5),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Obx(()=>DropdownButton<String>(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      value: controller.filter.value,
+                      hint: const Text('Type'),
+                      underline: const SizedBox(),
+                      onChanged: (newValue) {
+                        controller.onChangeFilter(newValue ?? "All Type");
+                      },
+                      items: controller.pokemonTypes.map((filter) {
+                        return DropdownMenuItem<String>(
+                          value: filter.name,
+                          child: Text(filter.name.capitalize!),
+                        );
+                      }).toList(),
+                    ),
+                  )),
+                  const SizedBox(width: 12.0),
+                  Container(
+                    height: 42.0,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.5),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Obx(()=>DropdownButton<String>(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      value: controller.sort.value,
+                      hint: const Text('Sort'),
+                      underline: const SizedBox(),
+                      onChanged: (newValue) {
+                        controller.onChangeSort(newValue ?? "Id Ascending");
+                      },
+                      items: controller.sortList.map((filter) {
+                        return DropdownMenuItem<String>(
+                          value: filter,
+                          child: Text(filter),
+                        );
+                      }).toList(),
+                      icon: const Icon(Icons.sort_rounded),
+                    ),
+                  )),
+                  const SizedBox(width: 12.0),
+                ],
+              ),
+              const SizedBox(height: 12.0),
               Expanded(
                 child: controller.obx(
                   (state) => GridView.builder(
