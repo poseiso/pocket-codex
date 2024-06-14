@@ -1,16 +1,41 @@
-# pocket_codex
+# Pocket Codex
 
-A new Flutter project.
+The Pokemon Flutter App is a stunning and efficient Pokemon application developed using Flutter with GetX pattern for state management. 
+It features smooth animations for viewing a list of Pokemon, detailed transitions for viewing Pokemon details, custom error pages and sorting and filtering for enhanced user experience.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+### Pokemon List
+Scroll through a list of Pokemon, with minimal waiting time.
 
-A few resources to get you started if this is your first Flutter project:
+### Filter and Sort
+Can't quickly find what you're looking for? Or looking for something specific?
+Use the Filter and Sort feature.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Pokemon Detail Information
+You can select a Pokemon from the list to show a more detailed information about the Pokemon.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 3. Error page
+
+In the event of a problem, you can easily try to reload your request with a simple but functional error handling widget.
+
+## Running the App
+
+- Clone the repository `git clone git@github.com:poseiso/pocket-codex.git`
+- Change flutter version to `3.23.0-0.1.pre`
+- Run `flutter pub get` to grab the dependencies
+- Use `flutter run` to start the application
+
+## Testing the App
+N/A
+
+## dependencies
+
+- Flutter 3.23.0-0.1.pre
+- [GetX](https://pub.dev/packages/get)
+- [Cached Network Image](https://pub.dev/packages/cached_network_image)
+- [Logger](https://pub.dev/packages/logger)
+- [Skeleton Ui](https://pub.dev/packages/flutter_skeleton_ui) for skeleton loading
+
+
+
