@@ -15,7 +15,7 @@ Use the Filter and Sort feature.
 ### Pokemon Detail Information
 You can select a Pokemon from the list to show a more detailed information about the Pokemon.
 
-### 3. Error page
+### Error Handling
 
 In the event of a problem, you can easily try to reload your request with a simple but functional error handling widget.
 
@@ -35,7 +35,7 @@ N/A
 - [GetX](https://pub.dev/packages/get)
 - [Cached Network Image](https://pub.dev/packages/cached_network_image)
 - [Logger](https://pub.dev/packages/logger)
-- [Skeleton Ui](https://pub.dev/packages/flutter_skeleton_ui) for skeleton loading
+- [Skeleton Ui](https://pub.dev/packages/flutter_skeleton_ui)
 
 
 

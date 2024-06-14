@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:get/get.dart';
+import 'package:pocket_codex/app/common/widget_error.dart';
 import 'package:pocket_codex/app/utils/app_config.dart';
 import 'package:pocket_codex/app/utils/utils.dart';
 
@@ -36,6 +37,7 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
         child: Column(
           children: [
             Flexible(
+              flex: 2,
               child: Container(
                 color: Utils.colorByType(
                   controller.pokemonItem!.types.first!,
@@ -180,7 +182,9 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
                         builder: (_) {
                           if (controller.isLoading) {
                             return SkeletonListView();
-                          } else {
+                          } else if (controller.isError){
+                            return WidgetError(onReload: controller.fetchPokemonDetail, error: "An error occured while loading data");
+                          }else {
                             return TabBarView(
                               children: [
                                 _about(),
@@ -206,37 +210,41 @@ class PokemonDetailPage extends GetView<PokemonDetailController> {
   Widget _about() {
     return controller.isLoading
         ? SkeletonListView()
-        : Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                _WidgetStatItem(
-                  label: 'Species',
-                  value: controller.pokemon!.species.name.capitalize!,
-                ),
-                // Height in decimeter
-                _WidgetStatItem(
-                  label: 'Height',
-                  value: "${controller.pokemon!.height * 10} Cm",
-                ),
-                // Height in hectogram
-                _WidgetStatItem(
-                  label: 'Weight',
-                  value: '${controller.pokemon!.weight / 10} Kg',
-                ),
-                _WidgetStatItem(
-                  label: 'Abilities',
-                  value: controller.abilities.replaceAll("-", " ").capitalize!,
-                ),
-              ],
+        : SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  _WidgetStatItem(
+                    label: 'Species',
+                    value: controller.pokemon!.species.name.capitalize!,
+                  ),
+                  // Height in decimeter
+                  _WidgetStatItem(
+                    label: 'Height',
+                    value: "${controller.pokemon!.height * 10} Cm",
+                  ),
+                  // Height in hectogram
+                  _WidgetStatItem(
+                    label: 'Weight',
+                    value: '${controller.pokemon!.weight / 10} Kg',
+                  ),
+                  _WidgetStatItem(
+                    label: 'Abilities',
+                    value: controller.abilities.replaceAll("-", " ").capitalize!,
+                  ),
+                ],
+              ),
             ),
-          );
+        );
   }
 
   Widget _stats() {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: _WidgetStatChart(stats: controller.pokemon!.stats),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: _WidgetStatChart(stats: controller.pokemon!.stats),
+      ),
     );
   }
 

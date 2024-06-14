@@ -66,6 +66,7 @@ class HomeController extends GetxController with StateMixin<List<PokemonItem>> {
 
       final pokemonResponse = await _repository.fetchPokemon(0, 100000);
       if (pokemonResponse == null) {
+        change(null, status: RxStatus.error("An error occured while loading data"));
         throw Exception("No result from fetch pokemon");
       }
       sortPokemon(pokemonResponse.results);
@@ -91,6 +92,7 @@ class HomeController extends GetxController with StateMixin<List<PokemonItem>> {
       final pokemonResponse =
           await _pokemonTypeDetailRepository.fetchPokemonType(filter.value);
       if (pokemonResponse == null) {
+        change(null, status: RxStatus.error("An error occured while loading data"));
         throw Exception("No result from fetch pokemon");
       }
 
@@ -116,6 +118,7 @@ class HomeController extends GetxController with StateMixin<List<PokemonItem>> {
       List<PokemonType>? typeReponse =
           await _pokemonTypeRepository.fetchPokemonType(typeOffset, typeLimit);
       if (typeReponse == null) {
+        change(null, status: RxStatus.error("An error occured while loading data"));
         throw Exception("No result from fetch type");
       }
       pokemonTypes.value = [...pokemonTypes, ...typeReponse];

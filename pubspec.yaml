@@ -2,7 +2,7 @@ name: pocket_codex
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 0.0.1
+version: 1.0.1
 
 environment:
   sdk: '>=3.5.0-143.0.dev <4.0.0'
