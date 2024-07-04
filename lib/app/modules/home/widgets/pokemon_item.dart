@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:pocket_codex/app/utils/app_config.dart';
 import 'package:pocket_codex/app/utils/utils.dart';
 
-class PokemonItem extends StatelessWidget {
+class PokemonItemWidget extends StatelessWidget {
   final String id;
   final String name;
   final List<String?> types;
@@ -15,7 +15,7 @@ class PokemonItem extends StatelessWidget {
   // using a function makes the intent clearer.
   final Function() onTap;
 
-  const PokemonItem({
+  const PokemonItemWidget({
     super.key,
     required this.id,
     required this.name,

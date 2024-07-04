@@ -55,7 +55,7 @@ class PokemonDetailController extends GetxController {
       _isLoading.value = false;
     } catch (error, trace) {
       _isLoading.value = false;
-      Logger().f(error, stackTrace: trace);
+      Logger().d(error, stackTrace: trace);
     }
   }
 

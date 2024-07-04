@@ -5,8 +5,7 @@ import '../modules/pokemon_detail/pokemon_detail.dart';
 
 part './app_routes.dart';
 
-class AppPages {
-  AppPages._();
+abstract class AppPages {
   static final pages = [
     GetPage(
       name: AppRoutes.home,

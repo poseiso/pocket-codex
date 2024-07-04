@@ -29,7 +29,7 @@ class HomeController extends GetxController with StateMixin<List<PokemonItem>> {
         _pokemonTypeDetailRepository = pokemonTypeDetailRepository,
         _pokemonDetailRepository = pokemonDetailRepository;
 
-  final pokemon = <PokemonItem>[].obs;
+  var pokemon = <PokemonItem>[].obs;
   var pokemonTypes = [PokemonType(name: "All Type", url: '')].obs;
 
   @override
@@ -123,24 +123,38 @@ class HomeController extends GetxController with StateMixin<List<PokemonItem>> {
       }
       pokemonTypes.value = [...pokemonTypes, ...typeReponse];
     } catch (e, trace) {
-      Logger().f(e, stackTrace: trace);
+      Logger().d(e, stackTrace: trace);
     }
   }
 
-  /// pass `pokemonList` to fetch the details of normal PokemonItem
-  /// pass `pokemonTypeList` to fetch the details of PokemonItem in a type filter
   Future<void> fetchDetails(List<PokemonItem> pokemonList) async {
+    // Group the futures and batch the fetchDetails
+    // to avoid getting rate limited
+    List<Future<PokemonDetail?>> futures = [];
     for (var i = 0 + _offset; i < pokemonList.length + _offset; i++) {
-      final pokemonDetail = await _pokemonDetailRepository.fetchPokemonDetail(
+      futures.add(_pokemonDetailRepository.fetchPokemonDetail(
         pokemonList[i - _offset].name,
-      );
-      if (pokemonDetail == null) {
-        pokemon[i].types = ["Normal"];
-        continue;
-      }
-      pokemon[i].types = pokemonDetail.types.map((type) => type.name).toList();
-      change(pokemon, status: RxStatus.success());
+      ));
     }
+    final result = await Future.wait(futures);
+
+    // Temporary map for combining the list
+    Map<String?, PokemonDetail?> detailMap = {
+      for (var item in result) item?.name: item
+    };
+
+    // Combine the list using the map
+    for (var item in pokemon) {
+      if (detailMap.containsKey(item.name)) {
+        if (detailMap[item.name]?.types.isEmpty ?? false){
+          item.types = ["Normal"];
+          continue;
+        }
+        item.types = detailMap[item.name]!.types.map((e)=>e.name).toList();
+      }
+    }
+
+    change(pokemon, status: RxStatus.success());
   }
 
   void onChangeFilter(String newValue) {
@@ -172,7 +186,7 @@ class HomeController extends GetxController with StateMixin<List<PokemonItem>> {
       case "Name Descending":
         list.sort((a, b) => b.name.compareTo((a.name)));
       default:
-        list.sort((a, b) => int.parse(a.name).compareTo(int.parse(b.name)));
+        list.sort((a, b) => a.name.compareTo((b.name)));
     }
     change(list, status: RxStatus.success());
   }

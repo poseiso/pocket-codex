@@ -114,7 +114,7 @@ class HomePage extends GetView<HomeController> {
                     itemCount: state?.length ?? 0,
                     itemBuilder: (context, i) {
                       final item = state![i];
-                      return PokemonItem(
+                      return PokemonItemWidget(
                         id: item.id,
                         name: item.name,
                         types: item.types,
